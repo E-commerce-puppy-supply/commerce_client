@@ -34,7 +34,7 @@ const NavBar = () => {
                     My Store
                 </Typography>
                 <input type='text'
-                    placeholder='Search...'
+                    placeholder='fun...'
                     onChange={handleFilter} />
                 <Stack direction='row' >
                     <RenderMenu />
