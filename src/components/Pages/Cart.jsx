@@ -2,23 +2,15 @@ import { Box, Button, Card, Container, CssBaseline, Divider, Stack, Typography }
 import React from 'react'
 import { useState } from 'react'
 import { useUser } from '../Context/UserContext'
+import { useNavigate } from 'react-router-dom'
+
+
 
 
 
 const Cart = () => {
-  const { state: { cart } } = useUser();
-  const [total, setTotal] = useState();
-
-  // create function for adding up the total
-  const cartTotal = (total, price, qty) => {
-    return total = price * qty;
-  }
-
-  const getTotal = (products)=>{
-    
-    return products.reduce(total, item)
-
-  }
+  const { state: { cart }, dispatch } = useUser();
+  const navigate = useNavigate();
 
   return (
 
@@ -28,30 +20,49 @@ const Cart = () => {
         <Stack divider={<Divider orientation="horizontal" flexItem />} spacing={2}>
 
           {cart.map(item =>
-            <Box>
+            <Box key={item.id}>
               <Stack direction="row" spacing={7}>
               <img src={item.image} width={125} height={125} />
-              <Box>
-                
+              <Box>                
                 <Stack direction="row" spacing={7}>
                   <Typography>{new Intl.NumberFormat(undefined, { currency: "USD", style: "currency" }).format(item.price)}</Typography>                 
-                  <Button>+</Button>
+                  <Button onClick={()=>{
+                    dispatch({
+                      type:'ADDTOCART',
+                      payload: item
+                    })
+                  }} >+</Button>
                   <Typography>{item.qty}</Typography>
-                  <Button>_</Button>
-                  <Button>remove</Button>
+                  <Button onClick={()=>{
+                    dispatch({
+                      type:'subtractFromCart',
+                      payload: item
+                    })
+                  }}>-</Button>
+                  <Button
+                  onClick={() => {
+                    dispatch({
+                        type: "removeFromCart",
+                        payload: item,
+                    })
+                }}>remove</Button>
                   <Typography>
-                    {new Intl.NumberFormat(undefined, { currency: "USD", style: "currency" }).format(item.price * item.qty)}
-                  
+                    {new Intl.NumberFormat(undefined, { currency: "USD", style: "currency" }).format(item.price * item.qty)}                  
                   </Typography>
                 </Stack>
               </Box>
               </Stack>
-              
+             
             </Box>
 
           )}
         </Stack>
+        <Typography>
+          Total {new Intl.NumberFormat(undefined, { currency: "USD", style: "currency" }).format(
+          cart.map((i)=>i.price * i.qty).reduce((total, num)=>total + num, 0))}
+        </Typography>
       </Container>
+      <Button onClick={()=>navigate('/checkout')}>Checkout</Button>
     </Box>
   )
 }

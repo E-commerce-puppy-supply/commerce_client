@@ -28,7 +28,7 @@ const Products = () => {
 
     return (
         <>
-            <Box>
+            <Box sx={{paddingTop: 3}}>
                 <Grid container >
                     {/* <Grid container item xs={4}>
                         <SideBar />

@@ -3,11 +3,14 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Container, CssBaseline, Stack, Typography, Button } from '@mui/material'
 import Box from '@mui/material/Box'
-
+import { useUser } from '../Context/UserContext'
+import { useNavigate } from 'react-router-dom'
 
 const SingleProduct = () => {
     const [product, setProduct] = useState({});
     const { id } = useParams();
+    const { state, dispatch } = useUser();
+    const navigate = useNavigate();
 
 
 
@@ -52,8 +55,17 @@ const SingleProduct = () => {
                             <Typography >
                                 {new Intl.NumberFormat(undefined, { currency: "USD", style: "currency" }).format(product.price)}
                             </Typography>
-                            <Button>Add to Cart</Button>
-                            <Button>Contiue Shopping</Button>
+                            <Button
+                                onClick={()=> {
+                                    dispatch({
+                                        type: 'ADDTOCART',
+                                        payload: product
+                                    })
+                                }}>Add to Cart</Button>
+                            <Button
+                            onClick={()=>{
+                                navigate('/');
+                            }}>Contiue Shopping</Button>
                         </Stack>
                     </Container>
 

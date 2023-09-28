@@ -25,8 +25,8 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const validUsername = "mor_2314"
-    const validPassword = "83r5^_"
+    const validUsername = "johnd"
+    const validPassword = "m38rmF$"
 
     try {
       const response = await fetch('https://fakestoreapi.com/auth/login', {
@@ -112,6 +112,16 @@ const Login = () => {
             </Grid>
           </Box>
         </Box>
+
+        <Container
+        sx={{paddingTop: 3}}>
+          <Typography>
+            Username: johnd
+          </Typography>
+          <Typography>
+            Password: m38rmF$
+          </Typography>
+        </Container>
       </Container>
     </>
 

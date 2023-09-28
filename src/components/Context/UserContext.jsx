@@ -95,6 +95,8 @@ function userReducer(state, action) {
             return { ...state, LoggedIn: false };
         case "setCart": 
                 return{...state, cart: action.payload}
+        case "CLEAR_CART": 
+                return{...state, cart: []}
 
 
 
