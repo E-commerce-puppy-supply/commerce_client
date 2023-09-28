@@ -40,6 +40,9 @@ const Login = () => {
         })
       })
       const tokenUser = await response.json();
+      dispatch({
+        type: 'LOGGIN'
+      })
       localStorage.setItem("Token", tokenUser.token)
       dispatch({
         type: "loggedIn"

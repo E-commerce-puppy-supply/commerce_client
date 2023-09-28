@@ -57,10 +57,14 @@ const SingleProduct = () => {
                             </Typography>
                             <Button
                                 onClick={()=> {
-                                    dispatch({
-                                        type: 'ADDTOCART',
-                                        payload: product
-                                    })
+                                    if(!state.loggedIn){
+                                        return
+                                    } else{
+                                        dispatch({
+                                            type: 'ADDTOCART',
+                                            payload: product
+                                        })
+                                    }
                                 }}>Add to Cart</Button>
                             <Button
                             onClick={()=>{

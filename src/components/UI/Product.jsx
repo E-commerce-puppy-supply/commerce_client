@@ -2,7 +2,7 @@ import React from 'react'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { CardMedia, CardContent, Typography, Container, CssBaseline, Box, Paper } from '@mui/material'
+import { Rating, CardMedia, CardContent, Typography, Container, CssBaseline, Box, Paper } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../Context/UserContext'
 
@@ -23,15 +23,20 @@ const Product = ({ product }) => {
                     <Typography >
                         {product.title}
                     </Typography>
+                    <Rating name="read-only" value={product.rating.rate} readOnly />
                     <Typography>
                         {new Intl.NumberFormat(undefined, { currency: "USD", style: "currency" }).format(product.price)}
                     </Typography>                  
                     {!state.cart.some(p => p.id === product.id) ?
                         <Button variant="contained" onClick={() => {
-                            dispatch({
-                                type: "ADDTOCART",
-                                payload: product
-                            })
+                            if(!state.loggedIn){
+                                return
+                            } else{
+                                dispatch({
+                                    type: 'ADDTOCART',
+                                    payload: product
+                                })
+                            }
                         }}>Add to Cart</Button> :
                         <Box>
                             <Box>
